@@ -61,7 +61,7 @@ endif
 .PHONY: $(ADA_OBJS)
 
 OBJS		=	$(AS_OBJS) $(ADA_OBJS)
-RTS_DIR		=	$(PWD)/rts/boards/$(ARCH)
+RTS_DIR		=	$(PWD)/rts/boards/$(BOARD)/$(ARCH)
 
 ###############################################################################
 # Debug specific flags.
@@ -108,5 +108,6 @@ boot.iso: $(TARGET)
 .PHONY: clean
 
 clean:
-	-rm obj/* *~ $(TARGET)
+	@rm -rf obj/*
+	-rm *~ $(TARGET)
 
