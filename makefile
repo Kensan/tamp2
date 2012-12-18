@@ -109,7 +109,7 @@ qemu: $(IMAGE)
 
 # The PC boot.iso image that qemu uses.
 boot.iso: $(TARGET)
-	grub-mkrescue -o boot.iso out/disk/
+	grub-mkrescue -o $@ out/disk/
 
 rts: prepare
 	$(TOOL_PREFIX)$(GNATMAKE) -p -XBoard=$(BOARD) \
