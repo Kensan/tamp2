@@ -111,6 +111,10 @@ qemu: $(IMAGE)
 boot.iso: $(TARGET)
 	grub-mkrescue -o boot.iso out/disk/
 
+rts: prepare
+	$(TOOL_PREFIX)$(GNATMAKE) -p -XBoard=$(BOARD) \
+		-XBuild=$(BUILD) -XBits=$(BITS) -Pgnat.gpr
+
 prepare:
 	@mkdir -p obj/$(ARCH)
 
