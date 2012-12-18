@@ -90,7 +90,7 @@ all: $(TARGET)
 $(TARGET): prepare $(OBJS) src/tamp.adb
 	$(TOOL_PREFIX)$(GNATMAKE) -p --RTS=$(RTS_DIR) \
 		-XBoard=$(BOARD) -XBuild=$(BUILD) -XBug=$(BUG) \
-		-Ptamp.gpr
+		-XBits=$(BITS) -Ptamp.gpr
 
 obj/$(ARCH)/startup.o: src/$(BOARD)/startup.s
 	$(AS) $(AS_FLAGS) $< -o $@

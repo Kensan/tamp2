@@ -8,17 +8,24 @@ project TAMP is
    type Build_Name is ("debug", "release");
    type Bug_Name   is ("bug", "clean");
    type Board_Name is ("pc", "rpi");
-   type Arch_Name  is ("none", "i386", "arm");
+   type Arch_Name  is ("i386", "x86_64", "arm");
+   type Bit_Size   is ("32", "64");
 
    Build : Build_Name := external ("Build");
    Bug   : Bug_Name   := external ("Bug");
    Board : Board_Name := external ("Board");
-   Arch  : Arch_Name  := "none";
+   Bits  : Bit_Size   := external ("Bits", "32");
+   Arch  : Arch_Name  := "i386";
    Out_Dir := "";
 
    case Board is
       when "pc" =>
-         Arch := "i386";
+         case Bits is
+            when "32" =>
+               Arch := "i386";
+            when "64" =>
+               Arch := "x86_64";
+         end case;
       when "rpi" =>
          Arch := "arm";
    end case;
@@ -66,11 +73,14 @@ project TAMP is
             Builder_Bug_Switches := ("");
       end case;
 
-      case Board is
-         when "pc" =>
+      case Arch is
+         when "i386" =>
             Builder_Board_Switches := ("-m32", "-march=i386");
 
-         when "rpi" =>
+         when "x86_64" =>
+            Builder_Board_Switches := ("-m64");
+
+         when "arm" =>
             Builder_Board_Switches :=
               ("-march=armv6zk", "-mfpu=vfp", "-mfloat-abi=hard", "-marm",
                 "-mcpu=arm1176jzf-s", "-mtune=arm1176jzf-s");
