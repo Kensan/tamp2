@@ -24,10 +24,10 @@ SECTIONS
     }
 
     .note : {
-    	  *(.note)
+		*(.note)
     }
 
     .debug : {
-    	  *(.debug)
+		*(.debug)
     }
 }
