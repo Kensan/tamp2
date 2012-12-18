@@ -35,7 +35,7 @@ TOOL_PREFIX	=
 
 AS_FLAGS	=	--32 -march=$(ARCH)
 
-AS_OBJS		=	obj/startup.o
+AS_OBJS		=	obj/$(ARCH)/startup.o
 ADA_OBJS	=	obj/multiboot.o
 
 IMAGE		=	boot.iso
@@ -86,8 +86,8 @@ $(TARGET): prepare $(OBJS) src/tamp.adb
 		-XBoard=$(BOARD) -XBuild=$(BUILD) -XBug=$(BUG) \
 		-Ptamp.gpr
 
-obj/startup.o: src/$(BOARD)/startup.s
-	$(AS) $(AS_FLAGS) src/$(BOARD)/startup.s -o obj/startup.o
+obj/$(ARCH)/startup.o: src/$(BOARD)/startup.s
+	$(AS) $(AS_FLAGS) $< -o $@
 
 # This will start qemu, but then stop the emulation, press ctrl+alt+shift+f2
 # to get to the console, press c to continue once GDB has been configured. For
