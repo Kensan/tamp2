@@ -81,8 +81,8 @@ TARGET		=	$(OUTDIR)tamp-$(ARCH).elf
 ###############################################################################
 all: $(TARGET)
 
-$(TARGET): $(OBJS) src/tamp.adb
-	$(TOOL_PREFIX)$(GNATMAKE) --RTS=$(RTS_DIR) \
+$(TARGET): prepare $(OBJS) src/tamp.adb
+	$(TOOL_PREFIX)$(GNATMAKE) -p --RTS=$(RTS_DIR) \
 		-XBoard=$(BOARD) -XBuild=$(BUILD) -XBug=$(BUG) \
 		-Ptamp.gpr
 
@@ -105,9 +105,11 @@ qemu: $(IMAGE)
 boot.iso: $(TARGET)
 	grub-mkrescue -o boot.iso out/disk/
 
-.PHONY: clean
+prepare:
+	@mkdir -p obj/$(ARCH)
 
 clean:
-	@rm -rf obj/*
+	@rm -rf obj
 	-rm *~ $(TARGET)
 
+.PHONY: clean prepare
