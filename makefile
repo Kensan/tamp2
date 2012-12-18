@@ -10,6 +10,7 @@
 # for TAMP for.
 ###############################################################################
 BOARD		=	pc
+BITS		=	32
 BUILD		=	debug
 #BUILD		=	release
 
@@ -30,16 +31,21 @@ AS		=	as
 # Platform specific.
 ###############################################################################
 ifeq ($(BOARD),pc)
+ifeq ($(BITS),32)
 ARCH		=	i386
-TOOL_PREFIX	=
-
 AS_FLAGS	=	--32 -march=$(ARCH)
+QEMU		=	qemu
+else
+ARCH		=	x86_64
+AS_FLAGS	=	--64
+QEMU		=	qemu-system-x86_64
+endif
+TOOL_PREFIX	=
 
 AS_OBJS		=	obj/$(ARCH)/startup.o
 ADA_OBJS	=	obj/multiboot.o
 
 IMAGE		=	boot.iso
-QEMU		=	qemu
 QEMU_FLAGS	=	-s -cdrom $(IMAGE)
 QEMUD_FLAGS	=	-S $(QEMU_FLAGS)
 
